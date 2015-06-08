@@ -96,6 +96,7 @@ define sudo::conf(
     source  => $source,
     content => $content_real,
     notify  => $notify_real,
+    provider=> 'sudo_hidden_tempfile',
   }
 
   exec {"sudo-syntax-check for file ${cur_file}":
