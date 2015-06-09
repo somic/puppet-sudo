@@ -6,6 +6,9 @@ Puppet::Type.type(:file).provide :sudo_hidden_tempfile,
   desc "Like file but writes tempfiles that are hidden from sudo"
 
   def write(property)
+    File.open('/tmp/sudo_hidden_tempfile.debug.log', 'a') { |f|
+      f.write("#{Time.now} write method: self[:path]=#{self[:path].inspect}\n")
+    }
     mode = self.should(:mode) # might be nil
     mode_int = mode ? symbolic_mode_to_int(mode, Puppet::Util::DEFAULT_POSIX_MODE) : nil
     # '.' in name will make sudo ignore this file and its tempfiles
